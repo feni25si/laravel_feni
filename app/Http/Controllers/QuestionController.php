@@ -33,12 +33,21 @@ class QuestionController extends Controller
         //$data['pertanyaan'] = $request->pertanyaan;
         $request->validate([
             'nama' => 'required|max:10',
-            'email' => ['required','email'],
-		    'pertanyaan' => 'required|max:300|min:8',
-        ],[
+            'email' => ['required', 'email'],
+            'pertanyaan' => 'required|max:300|min:8',
+        ], [
             'nama.required' => 'Nama tidak boleh kosong',
-            'email.email' => 'Email Tidak valid'
+            'email.email' => 'Email tidak valid',
+            'pertanyaan.required' => 'Pertanyaan tidak boleh kosong',
+            'pertanyaan.min' => 'Pertanyaan minimal 8 karakter',
+            'pertanyaan.max' => 'Pertanyaan maksimal 300 karakter',
         ]);
+
+        $nama = $request->input('nama');
+        $email = $request->input('email');
+        $pertanyaan = $request->input('pertanyaan');
+
+       return redirect()->route('home-question-respon')->with(compact('nama', 'pertanyaan', 'email'));
     }
 
     /**
